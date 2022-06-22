@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
 	"github.com/Louis3-silv4/go-rest-api/database"
 	"github.com/Louis3-silv4/go-rest-api/models"
 	"github.com/gorilla/mux"
@@ -31,4 +32,11 @@ func CriaUmaNovaPersonalidade(w http.ResponseWriter, r *http.Request)  {
 	json.NewDecoder(r.Body).Decode(&novaPersonalidade)
 	database.DB.Create(&novaPersonalidade)
 	json.NewEncoder(w).Encode(&novaPersonalidade)
+}
+func DeletaUmaPersonalidade(w http.ResponseWriter, r *http.Request)  {
+	vars := mux.Vars(r)
+	id := vars["id"]
+	var personalidade models.Personalidade
+	database.DB.Delete(&personalidade, id)
+	json.NewEncoder(w).Encode(personalidade)
 }
